@@ -27,10 +27,6 @@ export default class TaskBar extends Component {
     handleSubmit = (event) => {
         const {addItem} = this.props;
         addItem(...Object.values(this.state));
-        this.setState({
-            task: "",
-            category: ""
-        });
         event.preventDefault();
     };
 
