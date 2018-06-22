@@ -11,14 +11,26 @@ class App extends Component {
             category: []
         },
     };
+    
+    formatDate = (date) => {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
 
-    addItem = (text, priority, category, data) => {
-        if(text && priority && category && data) {
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('.');
+    };
+
+    addItem = (text, priority, category, date) => {
+        if(text && priority && category && date) {
             const newItem = {
                 text: text,
                 priority: priority,
                 category: category,
-                data: data
+                date: this.formatDate(date)
             };
 
             this.setState({toDoList: [...this.state.toDoList, newItem]})

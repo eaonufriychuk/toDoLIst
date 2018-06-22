@@ -1,4 +1,7 @@
 import React, {Component, Fragment} from 'react';
+
+import DatePicker from 'react-date-picker';
+
 import './TaskBar.css';
 
 export default class TaskBar extends Component {
@@ -6,7 +9,7 @@ export default class TaskBar extends Component {
         task: "",
         priority: "",
         category: "",
-        data: ""
+        date: new Date(),
     };
 
     handleChangeTask = (event) => {
@@ -20,18 +23,19 @@ export default class TaskBar extends Component {
     handleChangeCategory = (event) => {
         this.setState({category: event.target.value})
     };
-    handleChangeData = (event) => {
-        this.setState({data: event.target.value})
-    };
+
     handleSubmit = (event) => {
         const {addItem} = this.props;
         addItem(...Object.values(this.state));
         this.setState({
             task: "",
-            category: "",
-            data: ""
+            category: ""
         });
         event.preventDefault();
+    };
+
+    handleChangeDate = (date) => {
+        this.setState({date});
     };
 
     render() {
@@ -50,7 +54,10 @@ export default class TaskBar extends Component {
                     </select>
                     <input onChange={this.handleChangeCategory} name="category" type="category"
                            placeholder="add category" required/>
-                    <input onChange={this.handleChangeData} name="date" type="text" placeholder="date" required/>
+                    <DatePicker
+                        onChange={this.handleChangeDate}
+                        value={this.state.date}
+                    />
                     <input className="btn btn-primary" type="submit" value="Add task"/>
                 </form>
             </Fragment>

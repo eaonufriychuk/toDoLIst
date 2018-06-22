@@ -22,7 +22,7 @@ export default (props) => {
                                 <td>{task.text}</td>
                                 <td>{task.priority}</td>
                                 <td>{task.category}</td>
-                                <td>{task.data}</td>
+                                <td>{task.date}</td>
                             </tr>
                         )
                     })}
