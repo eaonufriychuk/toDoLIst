@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'react-date-picker';
 import { v1 } from 'uuid';
-import './TaskBar.css';
 import { addToDO } from "../../actions";
 import { formatDate } from '../../App'
+
+import './TaskBar.css';
 
 class TaskBar extends Component {
   state = {
@@ -44,54 +45,65 @@ class TaskBar extends Component {
         category,
         date: formatDate(date),
       };
-
-
       this.props.handleAddToDO(newItem);
-      // this.setState({ toDoList: [...this.state.toDoList, newItem] });
     }
   };
 
   render() {
     return (
       <Fragment>
-        <form className="input-group task-bar" onSubmit={this.handleSubmit}>
-          <input
-            onChange={this.handleChangeTask}
-            name="task"
-            type="text"
-            placeholder="add your task"
-            required
-          />
-          <select onChange={this.handleChangePriority} name="priority" id="priority">
-            <option selected disabled>
-              Choose priority
+        <div className="card">
+          <div className="card-header">
+            <h4 className="header task-bar-header">Добавьте задачу</h4>
+          </div>
+          <div className="card-body">
+            <form className="input-group task-bar" onSubmit={this.handleSubmit}>
+              <input
+                onChange={this.handleChangeTask}
+                name="task"
+                type="text"
+                placeholder="add your task"
+                required
+              />
+              <select onChange={this.handleChangePriority} name="priority" id="priority">
+                <option selected disabled>
+                  Choose priority
             </option>
-            <option>
-              +2
+                <option>
+                  +2
             </option>
-            <option>
-              +1
+                <option>
+                  +1
             </option>
-            <option>
-              0
+                <option>
+                  0
             </option>
-            <option>
-              -1
+                <option>
+                  -1
             </option>
-            <option>
-              -2
+              </select>
+              <select onChange={this.handleChangeCategory} name="category" id="category">
+                <option selected disabled>
+                  Choose category
             </option>
-          </select>
-          <input
-            onChange={this.handleChangeCategory}
-            name="category"
-            type="category"
-            placeholder="add category"
-            required
-          />
-          <DatePicker onChange={this.handleChangeDate} value={this.state.date} />
-          <input className="btn btn-primary" type="submit" value="Add task" />
-        </form>
+                <option>
+                  Do now
+            </option>
+                <option>
+                  Do tomorrow
+            </option>
+                <option>
+                  Do soon
+            </option>
+                <option>
+                  Do when you get some extra time
+            </option>
+              </select>
+              <DatePicker onChange={this.handleChangeDate} value={this.state.date} />
+              <input className="btn btn-primary" type="submit" value="Add task" />
+            </form>
+          </div>
+        </div>
       </Fragment>
     );
   }
