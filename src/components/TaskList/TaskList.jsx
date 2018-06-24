@@ -10,7 +10,7 @@ function TaskList(props) {
     return (
         <div className="card-body">
             <div className="content">
-                <table className="table table-bordered table-hover">
+                <table className="table table-bordered">
                     <thead>
                         <tr class="text-center">
                             <th scope="col">Task</th>
