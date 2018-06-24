@@ -1,4 +1,12 @@
-.header{
+.header {
     display: flex;
     justify-content: space-around;
+}
+
+.content {
+    margin-left: 70px;
+}
+
+.table {
+    table-layout: fixed;
 }

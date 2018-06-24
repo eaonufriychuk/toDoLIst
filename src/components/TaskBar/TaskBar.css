@@ -1,3 +1,7 @@
 .input-group {
     justify-content: space-around;
 }
+
+.task-bar-header {
+    font-size: 20px;
+}

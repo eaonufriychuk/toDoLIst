@@ -1,11 +1,11 @@
 import React from 'react';
-import './TaskList.css';
 import { connect } from 'react-redux';
 import { removeToDO } from '../../actions'
 
+import './TaskList.css';
+
 function TaskList(props) {
     const { toDoList, onRemove } = props;
-    console.log(props);
 
     return (
         <div className="card-body">
@@ -28,7 +28,9 @@ function TaskList(props) {
                                         <td>{task.priority}</td>
                                         <td>{task.category}</td>
                                         <td>{task.date}</td>
-                                        <button className="btn btn-primary" onClick={onRemove(task.id)}>Delete</button>
+                                        <td><button
+                                            className="btn btn-primary"
+                                            onClick={onRemove(task.id)}>Delete</button></td>
                                     </tr>
                                 )
                             })}
@@ -40,8 +42,13 @@ function TaskList(props) {
 }
 
 export default connect(
-    (state, { search }) =>
-        ({ toDoList: state.filter(({ text }) => text.toLowerCase().indexOf(search.toLowerCase()) !== -1) }),
+    (state, { search, priority, category, sorted }) =>
+        ({
+            toDoList: state.filter(({ text }) => text.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+                .filter(task => priority.length !== 0 ? priority.includes(task.priority) : true)
+                .filter(task => category.length !== 0 ? category.includes(task.category) : true)
+                .sort((a, b) => sorted ? (new Date(a.date) - new Date(b.date)) : null)
+        }),
     dispatch => ({
         onRemove: id => () => dispatch(removeToDO(id))
     })

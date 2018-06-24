@@ -3,8 +3,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Header from './components/Header/Header';
 import TaskBar from './components/TaskBar/TaskBar';
-import TaskList from './components/TaskList/TaskList';
-import Search from './components/Search/Search';
 import Container from './components/Container/Container';
 
 export const formatDate = (date) => {
@@ -16,18 +14,10 @@ export const formatDate = (date) => {
   if (month.length < 2) month = `0${month}`;
   if (day.length < 2) day = `0${day}`;
 
-  return [day, month, year].join('.');
+  return [year, month, day].join('-');
 };
 
 class App extends Component {
-  state = {
-    search: '',
-    filters: {
-      priority: [],
-      category: [],
-    },
-  };
-
 
   upDateSearch = (event) => {
     this.setState({ search: event.target.value });
@@ -41,8 +31,7 @@ class App extends Component {
             <Header />
             <div className="card-body">
               <TaskBar />
-              <Search upDateSearch={this.upDateSearch} />
-              <Container search={this.state.search} />
+              <Container />
             </div>
           </div>
         </div>

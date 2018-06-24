@@ -1,0 +1,12 @@
+.assortment {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.sort-date {
+  margin-top: 50px;
+  width: 200px;
+  height: 40px;
+  margin-left: 50px;
+}
