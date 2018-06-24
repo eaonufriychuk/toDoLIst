@@ -10,20 +10,21 @@ function TaskList(props) {
     return (
         <div className="card-body">
             <div className="content">
-                <table className="table">
+                <table className="table table-bordered table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th scope="col">Task</th>
                             <th scope="col">Priority</th>
                             <th scope="col">Category</th>
                             <th scope="col">Date</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {toDoList
                             .map(task => {
                                 return (
-                                    <tr key={task.id}>
+                                    <tr class="text-center" key={task.id}>
                                         <td>{task.text}</td>
                                         <td>{task.priority}</td>
                                         <td>{task.category}</td>
