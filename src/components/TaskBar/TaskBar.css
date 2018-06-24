@@ -5,3 +5,8 @@
 .task-bar-header {
     font-size: 20px;
 }
+
+.datepicker {
+    height: 38px;
+    border-color: gray;
+}

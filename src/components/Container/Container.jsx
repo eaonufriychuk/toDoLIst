@@ -60,11 +60,11 @@ export default class Container extends Component {
     return (
       <Fragment>
         <div className="assortment row">
-          <div className="col-4">
+          <div className="col-3">
             <Search upDateSearch={this.upDateSearch} />
             <button onClick={this.onSortDate} className="btn btn-primary sort-date">
-                {!sorted ? 'Сортировать по дате' : 'Сбросить сортировку'}
-                </button>
+              {!sorted ? 'Sort by date' : 'Reset Sorting'}
+            </button>
           </div>
           <Filter
             onPriorityChange={this.onPriorityChange}
