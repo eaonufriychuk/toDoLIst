@@ -18,27 +18,27 @@ const CATEGORY_LABEL = {
 
 export default ({ onPriorityChange, priority, onPriorityClear, onCategoryChange, category, onCategoryClear }) => {
   return (<Fragment>
-    <div className="col-3">
+    <div className="col-2">
       <div className="card">
-        <div className="card-header">Сортировка по приоритету</div>
+        <div className="card-header">Priority sort</div>
         <div className="card-body priority">
           <label className="checkbox" htmlFor="all" key="all" style={{ display: 'block' }}>
             <input
-                type="checkbox"
-                name='all'
-                id="all"
-                checked={priority.length === 0}
-                onChange={onPriorityClear} /> All
+              type="checkbox"
+              name='all'
+              id="all"
+              checked={priority.length === 0}
+              onChange={onPriorityClear} /> All
                 </label>
           {Object.keys(PRIORITY_LABEL).sort((a, b) => a - b).map(prior => (
             <label className="checkbox" htmlFor={prior} key={prior} style={{ display: 'block' }}>
               <input
-                  type="checkbox"
-                  name='prior'
-                  value={prior}
-                  id={prior}
-                  checked={priority.includes(PRIORITY_LABEL[prior])}
-                  onChange={onPriorityChange(PRIORITY_LABEL[prior])}
+                type="checkbox"
+                name='prior'
+                value={prior}
+                id={prior}
+                checked={priority.includes(PRIORITY_LABEL[prior])}
+                onChange={onPriorityChange(PRIORITY_LABEL[prior])}
               /> {PRIORITY_LABEL[prior]}
             </label>
           ))}
@@ -47,27 +47,27 @@ export default ({ onPriorityChange, priority, onPriorityClear, onCategoryChange,
     </div>
     <div className="col-4">
       <div className="card">
-        <div className="card-header">Сортировка по категории</div>
+        <div className="card-header">Sort by Category</div>
         <div className="card-body">
           <label htmlFor="all" key="all" style={{ display: 'block' }}>
             <input
-                className="checkbox"
-                type="checkbox"
-                name='all'
-                id="all"
-                checked={category.length === 0}
-                onChange={onCategoryClear} /> All
+              className="checkbox"
+              type="checkbox"
+              name='all'
+              id="all"
+              checked={category.length === 0}
+              onChange={onCategoryClear} /> All
                 </label>
           {Object.keys(CATEGORY_LABEL).sort((a, b) => a - b).map(type => (
             <label htmlFor={type} key={type} style={{ display: 'block' }}>
               <input
-                  className="checkbox"
-                  type="checkbox"
-                  name='type'
-                  value={type}
-                  id={type}
-                  checked={category.includes(CATEGORY_LABEL[type])}
-                  onChange={onCategoryChange(CATEGORY_LABEL[type])}
+                className="checkbox"
+                type="checkbox"
+                name='type'
+                value={type}
+                id={type}
+                checked={category.includes(CATEGORY_LABEL[type])}
+                onChange={onCategoryChange(CATEGORY_LABEL[type])}
               /> {CATEGORY_LABEL[type]}
             </label>
           ))}

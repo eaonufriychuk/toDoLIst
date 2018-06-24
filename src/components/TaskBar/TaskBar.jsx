@@ -54,52 +54,61 @@ class TaskBar extends Component {
       <Fragment>
         <div className="card">
           <div className="card-header">
-            <h4 className="header task-bar-header">Добавьте задачу</h4>
+            <h4 className="header task-bar-header">Add task</h4>
           </div>
           <div className="card-body">
-            <form className="input-group task-bar" onSubmit={this.handleSubmit}>
-              <input
-                onChange={this.handleChangeTask}
-                name="task"
-                type="text"
-                placeholder="add your task"
-                required
-              />
-              <select onChange={this.handleChangePriority} name="priority" id="priority">
-                <option selected disabled>
-                  Choose priority
+            <form className="form-row task-bar" onSubmit={this.handleSubmit}>
+              <div className="col">
+                <input
+                  className="form-control"
+                  onChange={this.handleChangeTask}
+                  name="task"
+                  type="text"
+                  placeholder="add your task"
+                  required
+                />
+              </div>
+              <div className="col">
+                <select className="form-control" onChange={this.handleChangePriority} name="priority" id="priority">
+                  <option selected disabled>
+                    Choose priority
             </option>
-                <option>
-                  +2
+                  <option>
+                    +2
             </option>
-                <option>
-                  +1
+                  <option>
+                    +1
             </option>
-                <option>
-                  0
+                  <option>
+                    0
             </option>
-                <option>
-                  -1
+                  <option>
+                    -1
             </option>
-              </select>
-              <select onChange={this.handleChangeCategory} name="category" id="category">
-                <option selected disabled>
-                  Choose category
+                </select>
+              </div>
+              <div className="col">
+                <select className="form-control" onChange={this.handleChangeCategory} name="category" id="category">
+                  <option selected disabled>
+                    Choose category
             </option>
-                <option>
-                  Do now
+                  <option>
+                    Do now
             </option>
-                <option>
-                  Do tomorrow
+                  <option>
+                    Do tomorrow
             </option>
-                <option>
-                  Do soon
+                  <option>
+                    Do soon
             </option>
-                <option>
-                  Do when you get some extra time
+                  <option>
+                    Do when you get some extra time
             </option>
-              </select>
-              <DatePicker onChange={this.handleChangeDate} value={this.state.date} />
+                </select>
+              </div>
+              <div className="col">
+                <DatePicker className="datepicker" onChange={this.handleChangeDate} value={this.state.date} />
+              </div>
               <input className="btn btn-primary" type="submit" value="Add task" />
             </form>
           </div>
