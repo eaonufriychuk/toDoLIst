@@ -1,124 +1,59 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import DatePicker from 'react-date-picker';
-import { v1 } from 'uuid';
-import { addToDO } from "../../actions";
-import { formatDate } from '../../App'
-
 import './TaskBar.css';
 
-class TaskBar extends Component {
-  state = {
-    task: '',
-    priority: '',
-    category: '',
-    date: new Date(),
-  };
+import React from 'react';
 
-  handleChangeTask = (event) => {
-    this.setState({ task: event.target.value });
-  };
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 
-  handleChangePriority = (event) => {
-    this.setState({ priority: event.target.value });
-  };
+export default (props) => {
+  const { handleSubmit } = props;
 
-  handleChangeCategory = (event) => {
-    this.setState({ category: event.target.value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.addItem(...Object.values(this.state));
-  };
-
-  handleChangeDate = (date) => {
-    this.setState({ date });
-  };
-
-  addItem = (text, priority, category, date) => {
-    if (text && priority && category && date) {
-      const newItem = {
-        id: v1(),
-        text,
-        priority,
-        category,
-        date: formatDate(date),
-      };
-      this.props.handleAddToDO(newItem);
-    }
-  };
-
-  render() {
-    return (
-      <Fragment>
-        <div className="card">
-          <div className="card-header">
-            <h4 className="header task-bar-header">Add task</h4>
-          </div>
-          <div className="card-body">
-            <form className="form-row task-bar" onSubmit={this.handleSubmit}>
-              <div className="col">
-                <input
-                  className="form-control"
-                  onChange={this.handleChangeTask}
-                  name="task"
-                  type="text"
-                  placeholder="add your task"
-                  required
-                />
-              </div>
-              <div className="col">
-                <select className="form-control" onChange={this.handleChangePriority} name="priority" id="priority">
-                  <option selected disabled>
-                    Choose priority
+  return (
+    <Form className="task-bar" inline onSubmit={handleSubmit}>
+      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+        <Label for="task" className="mr-sm-2">Task</Label>
+        <Input type="text" name="task" id="task" placeholder="your task" required />
+      </FormGroup>
+      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+        <Label for="priority" className="mr-sm-2">Priority</Label>
+        <Input type="select" name="priority" id="priority">
+          <option disabled>
+            Choose priority
             </option>
-                  <option>
-                    +2
+          <option>
+            +2
             </option>
-                  <option>
-                    +1
+          <option>
+            +1
             </option>
-                  <option>
-                    0
+          <option>
+            0
             </option>
-                  <option>
-                    -1
+          <option>
+            -1
             </option>
-                </select>
-              </div>
-              <div className="col">
-                <select className="form-control" onChange={this.handleChangeCategory} name="category" id="category">
-                  <option selected disabled>
-                    Choose category
+        </Input>
+      </FormGroup>
+      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+        <Label for="category" className="mr-sm-2">Category</Label>
+        <Input type="select" name="category" id="category">
+          <option disabled>
+            Choose category
             </option>
-                  <option>
-                    Do now
+          <option>
+            Do now
             </option>
-                  <option>
-                    Do tomorrow
+          <option>
+            Do tomorrow
             </option>
-                  <option>
-                    Do soon
+          <option>
+            Do soon
             </option>
-                  <option>
-                    Do when you get some extra time
+          <option>
+            Do when you get some extra time
             </option>
-                </select>
-              </div>
-              <div className="col">
-                <DatePicker className="datepicker" onChange={this.handleChangeDate} value={this.state.date} />
-              </div>
-              <input className="btn btn-primary" type="submit" value="Add task" />
-            </form>
-          </div>
-        </div>
-      </Fragment>
-    );
-  }
+        </Input>
+      </FormGroup>
+      <button className="btn btn-primary">Add your task</button>
+    </Form>
+  );
 }
-
-export default connect(
-  () => { },
-  dispatch => ({ handleAddToDO: todo => dispatch(addToDO(todo)) })
-)(TaskBar);
