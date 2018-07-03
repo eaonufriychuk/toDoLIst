@@ -9,3 +9,9 @@ export const formatDate = (date) => {
 
   return [year, month, day].join('-');
 };
+
+export const priorities = ['+2', '+1', '0', '-1'];
+
+export const categories = ['Do now', 'Do tomorrow', 'Do soon', 'Do when you get some extra time'];
+
+export const tableTitles = ['Task', 'Priority', 'Category', 'Date', ''];

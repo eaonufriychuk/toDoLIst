@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { v4 } from 'uuid';
 
 import {
@@ -24,40 +23,42 @@ export default class FilterPriority extends Component {
   }
 
   render() {
-    const { category, onCategoryChange, onCategoryClear, category_filter } = this.props;
+    const { filterValues, onFilterChange, onFilterClear, filter, filterLabel } = this.props;
 
     return (
       <div>
         <Button
-          className={category_filter.length > 1 ?
+          className={filter.length > 1 ?
             "sort-filter btn-outline-primary" : "sort-filter btn-outline-primary disabled"}
-          style={{ marginBottom: '1rem' }}
-          onClick={category_filter.length > 1 ? this.toggle : null} >Category</Button>
+          onClick={filter.length > 1 ? this.toggle : null}
+          style={{ marginBottom: '1rem' }}>{`Sort by ${filterLabel}`}</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
               <Form>
                 <FormGroup>
-                  <Label for="all" key="all">Choose category
-                  <CustomInput
+                  <Label for={`all${filterLabel}`} key={v4()}>{`Choose ${filterLabel}`}
+                    <CustomInput
                       type="checkbox"
-                      id="exampleCustomCheckbox"
+                      id={`all${filterLabel}`}
                       label="All"
-                      checked={category.length === 0}
-                      onChange={onCategoryClear}
+                      checked={filterValues.length === 0}
+                      onChange={onFilterClear}
                     />
                   </Label>
-                  {category_filter.map(type =>
-                    (<Label for="type" key={v4()}>
-                      <div>
+                  {filter.map(value =>
+                    (<div key={v4()}>
+                      <Label for="prior">
                         <CustomInput
                           type="checkbox"
-                          id={type} label={type}
-                          checked={category.includes(type)}
-                          onChange={onCategoryChange(type)}
+                          id={value}
+                          label={value}
+                          checked={filterValues.includes(value)}
+                          onChange={onFilterChange(value)}
                         />
-                      </div>
-                    </Label>))}
+                      </Label>
+                    </div>
+                    ))}
                 </FormGroup>
               </Form>
             </CardBody>

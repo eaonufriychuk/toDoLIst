@@ -3,6 +3,10 @@ import './TaskBar.css';
 import React from 'react';
 
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import Button from '../Button/Button';
+import { v4 } from 'uuid';
+import { priorities } from '../../constants';
+import { categories } from '../../constants';
 
 export default (props) => {
   const { handleSubmit } = props;
@@ -19,18 +23,9 @@ export default (props) => {
           <option disabled>
             Choose priority
             </option>
-          <option>
-            +2
-            </option>
-          <option>
-            +1
-            </option>
-          <option>
-            0
-            </option>
-          <option>
-            -1
-            </option>
+          {priorities.map(priority => <option key={v4()}>
+            {priority}
+          </option>)}
         </Input>
       </FormGroup>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -39,21 +34,15 @@ export default (props) => {
           <option disabled>
             Choose category
             </option>
-          <option>
-            Do now
-            </option>
-          <option>
-            Do tomorrow
-            </option>
-          <option>
-            Do soon
-            </option>
-          <option>
-            Do when you get some extra time
-            </option>
+          {categories.map(category => <option key={v4()}>
+            {category}
+          </option>)}
         </Input>
       </FormGroup>
-      <button className="btn btn-primary">Add your task</button>
+      <Button
+        className='btn btn-primary'
+        textContent2='Add your task'
+      />
     </Form>
   );
 }

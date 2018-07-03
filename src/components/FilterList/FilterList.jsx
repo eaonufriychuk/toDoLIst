@@ -2,8 +2,8 @@ import './FilterList.css';
 
 import React, { Fragment } from 'react';
 
-import FilterPriority from '../FilterPriority/FilterPriority';
-import FilterCategory from '../FilterCategory/FilterCategory';
+import Filter from '../Filter/Filter';
+import Button from '../Button/Button';
 
 export default (props) => {
   const {
@@ -20,20 +20,26 @@ export default (props) => {
   } = props;
 
   return (<Fragment>
-    <FilterPriority
-      onPriorityChange={onPriorityChange}
-      onPriorityClear={onPriorityClear}
-      priority={priority}
-      priority_filter={priority_filter}
+    <Filter
+      onFilterChange={onPriorityChange}
+      onFilterClear={onPriorityClear}
+      filterValues={priority}
+      filter={priority_filter}
+      filterLabel='priority'
     />
-    <FilterCategory
-      onCategoryChange={onCategoryChange}
-      onCategoryClear={onCategoryClear}
-      category={category}
-      category_filter={category_filter}
+    <Filter
+      onFilterChange={onCategoryChange}
+      onFilterClear={onCategoryClear}
+      filterValues={category}
+      filter={category_filter}
+      filterLabel='category'
     />
-    <button onClick={onSortDate} className="btn btn-outline-primary sort-filter">
-      {!sorted ? 'Sort by date' : 'Reset Sorting'}
-    </button>
+    <Button
+      handleClick={onSortDate}
+      parametr={sorted}
+      className='btn btn-outline-primary sort-filter'
+      textContent1='Reset Sorting'
+      textContent2='Sort by date'
+    />
   </Fragment>)
 }

@@ -75,9 +75,21 @@ export default class Main extends Component {
   };
 
   render() {
-    const { priority, category } = this.state.filters;
-    const { priority_filter, category_filter, loadPriorityFilter, loadCategoryFilter } = this.props;
-    const { sorted, search } = this.state;
+    const {
+      priority,
+      category
+    } = this.state.filters;
+    const {
+      priority_filter,
+      category_filter,
+      loadPriorityFilter,
+      loadCategoryFilter
+    } = this.props;
+
+    const {
+      sorted,
+      search
+    } = this.state;
 
     return (
       <Fragment>
@@ -117,7 +129,6 @@ export default class Main extends Component {
               priority={priority}
               category={category}
               sorted={sorted}
-              search={search}
               loadPriorityFilter={loadPriorityFilter}
               loadCategoryFilter={loadCategoryFilter}
             />
