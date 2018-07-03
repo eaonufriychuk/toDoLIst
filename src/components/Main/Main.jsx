@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 
-import { v1 } from 'uuid';
 import { formatDate } from '../../constants';
 
 import TaskBar from '../TaskBar/TaskBar';
@@ -21,23 +20,24 @@ export default class Main extends Component {
   }
 
   handleSubmit = (event) => {
+
+    const { loadOnServer, loadPriorityFilter, loadCategoryFilter } = this.props;
+    event.preventDefault();
     if (event.target.task.value && event.target.priority.value &&
       event.target.category.value) {
       const newItem = {
-        id: v1(),
         text: event.target.task.value.trim(),
         priority: event.target.priority.value,
         category: event.target.category.value,
         date: formatDate(new Date()),
       };
-
-      this.props.handleAddToDO(newItem);
-      event.preventDefault();
+      loadOnServer(newItem).then(() => loadPriorityFilter()).then(() => loadCategoryFilter())
     };
   };
 
+
   upDateSearch = (event) => {
-    this.setState(({ search: event.target.value }));
+    this.setState(({ search: event.target.value.trim() }));
   };
 
   onPriorityClear = () => {
@@ -76,6 +76,7 @@ export default class Main extends Component {
 
   render() {
     const { priority, category } = this.state.filters;
+    const { priority_filter, category_filter, loadPriorityFilter, loadCategoryFilter } = this.props;
     const { sorted, search } = this.state;
 
     return (
@@ -104,6 +105,8 @@ export default class Main extends Component {
               priority={priority}
               onSortDate={this.onSortDate}
               sorted={sorted}
+              priority_filter={priority_filter}
+              category_filter={category_filter}
             />
           </div>
           <div className="col-sm-9">
@@ -114,6 +117,9 @@ export default class Main extends Component {
               priority={priority}
               category={category}
               sorted={sorted}
+              search={search}
+              loadPriorityFilter={loadPriorityFilter}
+              loadCategoryFilter={loadCategoryFilter}
             />
           </div>
         </div>

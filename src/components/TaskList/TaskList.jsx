@@ -5,11 +5,11 @@ import React from 'react';
 import { Table } from 'reactstrap';
 
 export default (props) => {
-    const { toDoList, onRemove } = props;
+    const { toDoList, onRemove, search } = props;
 
     return (
         <div className="table-responsive">
-            <Table borderless className="table">
+            {toDoList.length ? <Table borderless className="table">
                 <thead>
                     <tr className="text-center">
                         <th scope="col">Task</th>
@@ -23,19 +23,19 @@ export default (props) => {
                     {toDoList
                         .map(task => {
                             return (
-                                <tr className="text-center" key={task.id}>
+                                <tr className="text-center" key={task._id}>
                                     <td>{task.text}</td>
                                     <td>{task.priority}</td>
                                     <td>{task.category}</td>
                                     <td>{task.date}</td>
                                     <td><button
                                         className="btn btn-light"
-                                        onClick={onRemove(task.id)}>Delete</button></td>
+                                        onClick={onRemove(task._id)}>Delete</button></td>
                                 </tr>
                             )
                         })}
                 </tbody>
-            </Table>
+            </Table> : <h6>Your search returned no results</h6>}
         </div>
     )
 }

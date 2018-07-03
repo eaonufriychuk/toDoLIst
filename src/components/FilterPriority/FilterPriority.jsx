@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { v4 } from 'uuid';
 
 import {
   Collapse,
@@ -11,8 +12,6 @@ import {
   Label
 } from 'reactstrap';
 
-import { PRIORITY_LABEL } from "../../constants";
-
 export default class FilterPriority extends Component {
   constructor(props) {
     super(props);
@@ -24,17 +23,21 @@ export default class FilterPriority extends Component {
   }
 
   render() {
-    const { priority, onPriorityChange, onPriorityClear } = this.props;
+    const { priority, onPriorityChange, onPriorityClear, priority_filter } = this.props;
 
     return (
       <div>
-        <Button className="sort-filter btn-outline-primary btn-sm" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Priority</Button>
+        <Button
+          className={priority_filter.length > 1 ?
+            "sort-filter btn-outline-primary" : "sort-filter btn-outline-primary disabled"}
+          onClick={priority_filter.length > 1 ? this.toggle : null}
+          style={{ marginBottom: '1rem' }}>Priority</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
               <Form>
                 <FormGroup>
-                  <Label for="all" key="all">Choose priority
+                  <Label for="all" key={v4()}>Choose priority
                   <CustomInput
                       type="checkbox"
                       id="all"
@@ -43,15 +46,15 @@ export default class FilterPriority extends Component {
                       onChange={onPriorityClear}
                     />
                   </Label>
-                  {Object.keys(PRIORITY_LABEL).sort((a, b) => a - b).map(prior =>
-                    (<div>
-                      <Label for="prior" key={prior}>
+                  {priority_filter.map(prior =>
+                    (<div key={v4()}>
+                      <Label for="prior">
                         <CustomInput
                           type="checkbox"
                           id={prior}
-                          label={PRIORITY_LABEL[prior]}
-                          checked={priority.includes(PRIORITY_LABEL[prior])}
-                          onChange={onPriorityChange(PRIORITY_LABEL[prior])}
+                          label={prior}
+                          checked={priority.includes(prior)}
+                          onChange={onPriorityChange(prior)}
                         />
                       </Label>
                     </div>

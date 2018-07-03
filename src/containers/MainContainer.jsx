@@ -1,21 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
 import Main from '../components/Main/Main';
 
-import { addToDo } from "../actions/toDoLIst";
+import { loadTodo, addTodoOnServer } from "../actions/toDoLIst";
 
-function MainContainer(props) {
-  const { handleAddToDO } = props;
-  return (
-    <Main handleAddToDO={handleAddToDO} />
-  );
+import { loadPriorityFilter } from "../actions/priority";
+import { loadCategoryFilter } from "../actions/category";
+
+class MainContainer extends Component {
+
+  componentDidMount() {
+    const { load, loadPriorityFilter, loadCategoryFilter } = this.props;
+    load();
+    loadCategoryFilter();
+    loadPriorityFilter();
+  };
+
+  render() {
+    const { loadOnServer, loadPriorityFilter, loadCategoryFilter, priority, category } = this.props;
+    return (
+      <Main
+        loadOnServer={loadOnServer}
+        loadPriorityFilter={loadPriorityFilter}
+        loadCategoryFilter={loadCategoryFilter}
+        priority_filter={priority}
+        category_filter={category}
+      />
+    );
+  }
 }
 
 export default connect(
-  () => {
-    return {}
+  (state, props) => {
+    return {
+      ...props,
+      priority: state.priority.priority_filter,
+      category: state.category.category_filter
+    }
   },
-  (dispatch) => ({ handleAddToDO: todo => dispatch(addToDo(todo)) })
+  (dispatch, props) => {
+    return {
+      ...props,
+      loadPriorityFilter: () => loadPriorityFilter(dispatch),
+      loadCategoryFilter: () => loadCategoryFilter(dispatch),
+      load: () => loadTodo(dispatch),
+      loadOnServer: (todo) => addTodoOnServer(dispatch, todo)
+    }
+  }
 )(MainContainer);

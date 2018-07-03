@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { v4 } from 'uuid';
+
 import {
   Collapse,
   Button,
@@ -10,8 +12,6 @@ import {
   FormGroup,
   Label
 } from 'reactstrap';
-
-import { CATEGORY_LABEL } from '../../constants';
 
 export default class FilterPriority extends Component {
   constructor(props) {
@@ -24,11 +24,15 @@ export default class FilterPriority extends Component {
   }
 
   render() {
-    const { category, onCategoryChange, onCategoryClear } = this.props;
+    const { category, onCategoryChange, onCategoryClear, category_filter } = this.props;
 
     return (
       <div>
-        <Button className="sort-filter btn btn-outline-primary btn-sm" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Category</Button>
+        <Button
+          className={category_filter.length > 1 ?
+            "sort-filter btn-outline-primary" : "sort-filter btn-outline-primary disabled"}
+          style={{ marginBottom: '1rem' }}
+          onClick={category_filter.length > 1 ? this.toggle : null} >Category</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
@@ -43,14 +47,14 @@ export default class FilterPriority extends Component {
                       onChange={onCategoryClear}
                     />
                   </Label>
-                  {Object.keys(CATEGORY_LABEL).sort((a, b) => a - b).map(type =>
-                    (<Label for="type" key={type}>
+                  {category_filter.map(type =>
+                    (<Label for="type" key={v4()}>
                       <div>
                         <CustomInput
                           type="checkbox"
-                          id={type} label={CATEGORY_LABEL[type]}
-                          checked={category.includes(CATEGORY_LABEL[type])}
-                          onChange={onCategoryChange(CATEGORY_LABEL[type])}
+                          id={type} label={type}
+                          checked={category.includes(type)}
+                          onChange={onCategoryChange(type)}
                         />
                       </div>
                     </Label>))}

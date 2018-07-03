@@ -15,6 +15,8 @@ export default (props) => {
     sorted,
     onCategoryClear,
     onSortDate,
+    priority_filter,
+    category_filter
   } = props;
 
   return (<Fragment>
@@ -22,13 +24,15 @@ export default (props) => {
       onPriorityChange={onPriorityChange}
       onPriorityClear={onPriorityClear}
       priority={priority}
+      priority_filter={priority_filter}
     />
     <FilterCategory
       onCategoryChange={onCategoryChange}
       onCategoryClear={onCategoryClear}
       category={category}
+      category_filter={category_filter}
     />
-    <button onClick={onSortDate} className="btn btn-outline-primary btn-sm sort-filter">
+    <button onClick={onSortDate} className="btn btn-outline-primary sort-filter">
       {!sorted ? 'Sort by date' : 'Reset Sorting'}
     </button>
   </Fragment>)
