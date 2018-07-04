@@ -3,26 +3,37 @@ import {
 } from 'redux-actions';
 
 import {
-  loadPrioritiesCompleted,
-  loadPrioritiesFailed
+  getPriorityRequest,
+  getPriorityCompleted,
+  getPriorityFailed,
 } from '../actions/priority';
 
 const initialState = {
-  priority_filter: [],
+  priorityValues: [],
+  fetching: false,
   error: null,
 };
 
 export default handleActions({
-  [loadPrioritiesCompleted]: (state, action) => {
+  [getPriorityRequest]: (state) => {
     return {
       ...state,
-      priority_filter: action.payload
+      fetching: true,
+      error: null,
     }
   },
-  [loadPrioritiesFailed]: (state, action) => {
+  [getPriorityCompleted]: (state, action) => {
     return {
       ...state,
-      error: action.payload
+      fetching: false,
+      priorityValues: action.payload,
+    }
+  },
+  [getPriorityFailed]: (state, action) => {
+    return {
+      ...state,
+      fetching: false,
+      error: action.payload,
     }
   }
 }, initialState);

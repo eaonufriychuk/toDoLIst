@@ -16,8 +16,8 @@ export default (props) => {
     priority,
     onSortDate,
     sorted,
-    priority_filter,
-    category_filter
+    priorityValues,
+    categoryValues,
   } = props;
 
   return (
@@ -32,8 +32,8 @@ export default (props) => {
         sorted={sorted}
         onCategoryClear={onCategoryClear}
         onSortDate={onSortDate}
-        priority_filter={priority_filter}
-        category_filter={category_filter}
+        priorityValues={priorityValues}
+        categoryValues={categoryValues}
       />
     </div>
   )

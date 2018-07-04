@@ -20,9 +20,9 @@ export default class Main extends Component {
   }
 
   handleSubmit = (event) => {
-
-    const { loadOnServer, loadPriorityFilter, loadCategoryFilter } = this.props;
     event.preventDefault();
+    const { postTodo, getPriorityValues, getCategoryValues } = this.props;
+
     if (event.target.task.value && event.target.priority.value &&
       event.target.category.value) {
       const newItem = {
@@ -31,10 +31,12 @@ export default class Main extends Component {
         category: event.target.category.value,
         date: formatDate(new Date()),
       };
-      loadOnServer(newItem).then(() => loadPriorityFilter()).then(() => loadCategoryFilter())
+
+      postTodo(newItem)
+        .then(() => getPriorityValues())
+        .then(() => getCategoryValues());
     };
   };
-
 
   upDateSearch = (event) => {
     this.setState(({ search: event.target.value.trim() }));
@@ -79,11 +81,10 @@ export default class Main extends Component {
       priority,
       category
     } = this.state.filters;
+
     const {
-      priority_filter,
-      category_filter,
-      loadPriorityFilter,
-      loadCategoryFilter
+      priorityValues,
+      categoryValues
     } = this.props;
 
     const {
@@ -117,8 +118,8 @@ export default class Main extends Component {
               priority={priority}
               onSortDate={this.onSortDate}
               sorted={sorted}
-              priority_filter={priority_filter}
-              category_filter={category_filter}
+              priorityValues={priorityValues}
+              categoryValues={categoryValues}
             />
           </div>
           <div className="col-sm-9">
@@ -129,8 +130,6 @@ export default class Main extends Component {
               priority={priority}
               category={category}
               sorted={sorted}
-              loadPriorityFilter={loadPriorityFilter}
-              loadCategoryFilter={loadCategoryFilter}
             />
           </div>
         </div>

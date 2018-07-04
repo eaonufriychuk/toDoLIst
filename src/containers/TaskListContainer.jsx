@@ -2,25 +2,28 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { removeTodoFromServer } from '../actions/toDoLIst';
+import { deleteTodo } from '../actions/todo';
+import { getPriority } from "../actions/priority";
+import { getCategory } from "../actions/category";
+
 import TaskList from '../components/TaskList/TaskList';
 
 class TaskListContainer extends Component {
 
-
   handeleRemove = (id) => () => {
-    const { onRemoveFromServer, loadPriorityFilter, loadCategoryFilter } = this.props;
-    onRemoveFromServer(id)
-      .then(() => loadPriorityFilter())
-      .then(() => loadCategoryFilter())
+    const { deleteTodo, getPriorityValues, getCategoryValues } = this.props;
+
+    deleteTodo(id)
+      .then(() => getPriorityValues())
+      .then(() => getCategoryValues());
   }
 
   render() {
-    const { toDoList, search } = this.props;
+    const { todoList, search } = this.props;
 
     return (
       <TaskList
-        toDoList={toDoList}
+        todoList={todoList}
         onRemove={this.handeleRemove}
         search={search}
       />
@@ -31,12 +34,17 @@ class TaskListContainer extends Component {
 export default connect(
   (state, { search, priority, category, sorted }) =>
     ({
-      toDoList: state.todo.todoList.filter(({ text }) => text.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+      todoList: state.todo.todoList.filter(({ text }) => text.toLowerCase().indexOf(search.toLowerCase()) !== -1)
         .filter(task => priority.length !== 0 ? priority.includes(task.priority) : true)
         .filter(task => category.length !== 0 ? category.includes(task.category) : true)
         .sort((a, b) => sorted ? (new Date(a.date) - new Date(b.date)) : null)
     }),
-  (dispatch) => ({
-    onRemoveFromServer: (id) => removeTodoFromServer(dispatch, id)
-  })
+  (dispatch, props) => {
+    return {
+      ...props,
+      deleteTodo: (id) => deleteTodo(dispatch, id),
+      getPriorityValues: () => getPriority(dispatch),
+      getCategoryValues: () => getCategory(dispatch),
+    }
+  }
 )(TaskListContainer);

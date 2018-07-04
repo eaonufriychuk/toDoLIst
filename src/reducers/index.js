@@ -9,5 +9,5 @@ import category from './category';
 export default combineReducers({
   todo,
   priority,
-  category
+  category,
 });

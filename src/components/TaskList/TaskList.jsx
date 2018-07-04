@@ -9,12 +9,12 @@ import { tableTitles } from '../../constants';
 import { v4 } from 'uuid';
 
 export default (props) => {
-    const { toDoList, onRemove, search } = props;
+    const { todoList, onRemove, search } = props;
 
     let result;
-    if (!toDoList.length && search) {
+    if (!todoList.length && search) {
         result = <div>Your search returned no results</div>
-    } else if (!toDoList.length) {
+    } else if (!todoList.length) {
         result = <div>Your have no tasks</div>
     } else {
         result = <Table borderless className="table">
@@ -24,7 +24,7 @@ export default (props) => {
                 </tr>
             </thead>
             <tbody>
-                {toDoList
+                {todoList
                     .map(task => {
                         return (
                             <tr className="text-center" key={task._id}>

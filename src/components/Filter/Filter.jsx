@@ -23,14 +23,14 @@ export default class FilterPriority extends Component {
   }
 
   render() {
-    const { filterValues, onFilterChange, onFilterClear, filter, filterLabel } = this.props;
+    const { filterAddedValues, onFilterChange, onFilterClear, filterValues, filterLabel } = this.props;
 
     return (
       <div>
         <Button
-          className={filter.length > 1 ?
+          className={filterValues.length > 1 ?
             "sort-filter btn-outline-primary" : "sort-filter btn-outline-primary disabled"}
-          onClick={filter.length > 1 ? this.toggle : null}
+          onClick={filterValues.length > 1 ? this.toggle : null}
           style={{ marginBottom: '1rem' }}>{`Sort by ${filterLabel}`}</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
@@ -42,18 +42,18 @@ export default class FilterPriority extends Component {
                       type="checkbox"
                       id={`all${filterLabel}`}
                       label="All"
-                      checked={filterValues.length === 0}
+                      checked={filterAddedValues.length === 0}
                       onChange={onFilterClear}
                     />
                   </Label>
-                  {filter.map(value =>
+                  {filterValues.map(value =>
                     (<div key={v4()}>
-                      <Label for="prior">
+                      <Label for={value}>
                         <CustomInput
                           type="checkbox"
                           id={value}
                           label={value}
-                          checked={filterValues.includes(value)}
+                          checked={filterAddedValues.includes(value)}
                           onChange={onFilterChange(value)}
                         />
                       </Label>

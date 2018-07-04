@@ -4,29 +4,37 @@ import { connect } from 'react-redux';
 
 import Main from '../components/Main/Main';
 
-import { loadTodo, addTodoOnServer } from "../actions/toDoLIst";
+import { getTodo, postTodo } from "../actions/todo";
 
-import { loadPriorityFilter } from "../actions/priority";
-import { loadCategoryFilter } from "../actions/category";
+import { getPriority } from "../actions/priority";
+import { getCategory } from "../actions/category";
 
 class MainContainer extends Component {
 
   componentDidMount() {
-    const { load, loadPriorityFilter, loadCategoryFilter } = this.props;
-    load();
-    loadCategoryFilter();
-    loadPriorityFilter();
+    const { getTodo, getPriorityValues, getCategoryValues } = this.props;
+
+    getTodo();
+    getPriorityValues();
+    getCategoryValues();
   };
 
   render() {
-    const { loadOnServer, loadPriorityFilter, loadCategoryFilter, priority, category } = this.props;
+    const {
+      postTodo,
+      getPriorityValues,
+      getCategoryValues,
+      priorityValues,
+      categoryValues,
+    } = this.props;
+
     return (
       <Main
-        loadOnServer={loadOnServer}
-        loadPriorityFilter={loadPriorityFilter}
-        loadCategoryFilter={loadCategoryFilter}
-        priority_filter={priority}
-        category_filter={category}
+        postTodo={postTodo}
+        getPriorityValues={getPriorityValues}
+        getCategoryValues={getCategoryValues}
+        priorityValues={priorityValues}
+        categoryValues={categoryValues}
       />
     );
   }
@@ -36,17 +44,17 @@ export default connect(
   (state, props) => {
     return {
       ...props,
-      priority: state.priority.priority_filter,
-      category: state.category.category_filter
+      priorityValues: state.priority.priorityValues,
+      categoryValues: state.category.categoryValues,
     }
   },
   (dispatch, props) => {
     return {
       ...props,
-      loadPriorityFilter: () => loadPriorityFilter(dispatch),
-      loadCategoryFilter: () => loadCategoryFilter(dispatch),
-      load: () => loadTodo(dispatch),
-      loadOnServer: (todo) => addTodoOnServer(dispatch, todo)
+      getPriorityValues: () => getPriority(dispatch),
+      getCategoryValues: () => getCategory(dispatch),
+      getTodo: () => getTodo(dispatch),
+      postTodo: (todo) => postTodo(dispatch, todo)
     }
   }
 )(MainContainer);

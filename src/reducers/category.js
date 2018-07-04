@@ -3,26 +3,37 @@ import {
 } from 'redux-actions';
 
 import {
-  loadCategoriesCompleted,
-  loadCategoriesFailed
+  getCategoryRequest,
+  getCategoryCompleted,
+  getCategoryFailed,
 } from '../actions/category';
 
 const initialState = {
-  category_filter: [],
+  categoryValues: [],
+  fetching: false,
   error: null,
 };
 
 export default handleActions({
-  [loadCategoriesCompleted]: (state, action) => {
+  [getCategoryRequest]: (state) => {
     return {
       ...state,
-      category_filter: action.payload
+      fetching: true,
+      error: null,
     }
   },
-  [loadCategoriesFailed]: (state, action) => {
+  [getCategoryCompleted]: (state, action) => {
     return {
       ...state,
-      error: action.payload
+      fetching: false,
+      categoryValues: action.payload,
+    }
+  },
+  [getCategoryFailed]: (state, action) => {
+    return {
+      ...state,
+      fetching: false,
+      error: action.payload,
     }
   }
 }, initialState);

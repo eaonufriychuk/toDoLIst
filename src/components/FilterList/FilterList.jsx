@@ -15,23 +15,23 @@ export default (props) => {
     sorted,
     onCategoryClear,
     onSortDate,
-    priority_filter,
-    category_filter
+    priorityValues,
+    categoryValues,
   } = props;
 
   return (<Fragment>
     <Filter
       onFilterChange={onPriorityChange}
       onFilterClear={onPriorityClear}
-      filterValues={priority}
-      filter={priority_filter}
+      filterAddedValues={priority}
+      filterValues={priorityValues}
       filterLabel='priority'
     />
     <Filter
       onFilterChange={onCategoryChange}
       onFilterClear={onCategoryClear}
-      filterValues={category}
-      filter={category_filter}
+      filterAddedValues={category}
+      filterValues={categoryValues}
       filterLabel='category'
     />
     <Button

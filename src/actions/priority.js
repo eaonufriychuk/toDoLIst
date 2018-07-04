@@ -2,16 +2,24 @@ import {
   createAction
 } from 'redux-actions';
 
-export const loadPrioritiesCompleted = createAction('LOAD_PRIORITIES_COMPLETED');
-export const loadPrioritiesFailed = createAction('LOAD_PRIORITIES_FAILED');
+import {
+  GET_PRIORITY_REQUEST,
+  GET_PRIORITY_COMPLETED,
+  GET_PRIORITY_FAILED,
+} from '../constants/priority';
 
-export const loadPriorityFilter = (dispatch) => {
+export const getPriorityRequest = createAction(GET_PRIORITY_REQUEST);
+export const getPriorityCompleted = createAction(GET_PRIORITY_COMPLETED);
+export const getPriorityFailed = createAction(GET_PRIORITY_FAILED);
+
+export const getPriority = (dispatch) => {
+  dispatch(getPriorityRequest());
   fetch(`http://localhost:3005/todo/priorities`)
     .then(res => res.json())
     .then(priority => {
-      dispatch(loadPrioritiesCompleted(priority));
+      dispatch(getPriorityCompleted(priority));
     })
     .catch(error => {
-      dispatch(loadPrioritiesFailed(error));
-    })
+      dispatch(getPriorityFailed(error));
+    });
 }

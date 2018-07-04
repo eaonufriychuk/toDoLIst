@@ -3,39 +3,50 @@ import {
 } from 'redux-actions';
 
 import {
-  addToDo,
-  removeToDo,
-  loadCompleted,
-  loadFailed
-} from '../actions/toDoLIst';
+  addTodo,
+  removeTodo,
+  getTodoRequest,
+  getTodoCompleted,
+  getTodoFailed
+} from '../actions/todo';
 
 const initialState = {
   todoList: [],
+  fetching: false,
   error: null,
 };
 
 export default handleActions({
-    [addToDo]: (state, action) => {
+    [addTodo]: (state, action) => {
       return {
         ...state,
         todoList: [...state.todoList, action.payload]
       };
     },
-    [removeToDo]: (state, action) => {
+    [removeTodo]: (state, action) => {
       return {
         ...state,
         todoList: state.todoList.filter(task => task._id !== action.payload),
       };
     },
-    [loadCompleted]: (state, action) => {
+    [getTodoRequest]: (state) => {
       return {
         ...state,
-        todoList: [...state.todoList, ...action.payload]
+        fetching: true,
+        error: null,
       };
     },
-    [loadFailed]: (state, action) => {
+    [getTodoCompleted]: (state, action) => {
       return {
         ...state,
+        fetching: false,
+        todoList: [...state.todoList, ...action.payload],
+      };
+    },
+    [getTodoFailed]: (state, action) => {
+      return {
+        ...state,
+        fetching: false,
         error: action.payload,
       }
     }
