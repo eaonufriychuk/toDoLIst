@@ -12,9 +12,11 @@
     "reactstrap": "^6.1.0",
     "redux": "^4.0.0",
     "redux-actions": "^2.4.0",
-    "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.5"
   },
   "scripts": {
     "start": "react-scripts start",
