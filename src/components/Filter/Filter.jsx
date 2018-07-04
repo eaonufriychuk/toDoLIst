@@ -29,7 +29,6 @@ export default class FilterPriority extends Component {
 
   toggle = () => {
     this.setState({ collapse: !this.state.collapse });
-    console.log(this.state.collapse)
   }
 
   render() {
