@@ -22,7 +22,6 @@ export default class FilterPriority extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.filterValues.length < 2) {
       this.setState({ collapse: false })
     }
