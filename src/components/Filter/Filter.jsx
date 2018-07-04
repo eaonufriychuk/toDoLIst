@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { v4 } from 'uuid';
 
 import {
@@ -15,11 +16,21 @@ import {
 export default class FilterPriority extends Component {
   constructor(props) {
     super(props);
-    this.state = { collapse: false };
+    this.state = {
+      collapse: false
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.filterValues.length < 2) {
+      this.setState({ collapse: false })
+    }
   }
 
   toggle = () => {
     this.setState({ collapse: !this.state.collapse });
+    console.log(this.state.collapse)
   }
 
   render() {

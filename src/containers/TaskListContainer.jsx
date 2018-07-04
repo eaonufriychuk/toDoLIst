@@ -42,9 +42,9 @@ export default connect(
   (dispatch, props) => {
     return {
       ...props,
-      deleteTodo: (id) => deleteTodo(dispatch, id),
-      getPriorityValues: () => getPriority(dispatch),
-      getCategoryValues: () => getCategory(dispatch),
+      deleteTodo: (id) => dispatch(deleteTodo(id)),
+      getPriorityValues: () => dispatch(getPriority()),
+      getCategoryValues: () => dispatch(getCategory()),
     }
   }
 )(TaskListContainer);

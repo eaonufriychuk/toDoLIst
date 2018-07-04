@@ -16,19 +16,19 @@ export const getTodoRequest = createAction(GET_TODO_REQUEST);
 export const getTodoCompleted = createAction(GET_TODO_COMPLETED);
 export const getTodoFailed = createAction(GET_TODO_FAILED);
 
-export const getTodo = (dispatch) => {
+export const getTodo = () => (dispatch) => {
   dispatch(getTodoRequest());
-  fetch(`http://localhost:3005/todo`)
+  return (fetch(`http://localhost:3005/todo`)
     .then(res => res.json())
     .then(todo => {
       dispatch(getTodoCompleted(todo));
     })
     .catch(error => {
       dispatch(getTodoFailed(error));
-    })
+    }))
 }
 
-export const postTodo = (dispatch, todo) => {
+export const postTodo = (todo) => (dispatch) => {
   return (fetch('http://localhost:3005/todo', {
       method: 'POST',
       body: JSON.stringify(todo),
@@ -43,7 +43,7 @@ export const postTodo = (dispatch, todo) => {
     }))
 }
 
-export const deleteTodo = (dispatch, id) => {
+export const deleteTodo = (id) => (dispatch) => {
   return (fetch(`http://localhost:3005/todo/${id}`, {
       method: 'DELETE'
     })

@@ -14,9 +14,9 @@ class MainContainer extends Component {
   componentDidMount() {
     const { getTodo, getPriorityValues, getCategoryValues } = this.props;
 
-    getTodo();
-    getPriorityValues();
-    getCategoryValues();
+    getTodo()
+      .then(() => getPriorityValues())
+      .then(() => getCategoryValues());
   };
 
   render() {
@@ -51,10 +51,10 @@ export default connect(
   (dispatch, props) => {
     return {
       ...props,
-      getPriorityValues: () => getPriority(dispatch),
-      getCategoryValues: () => getCategory(dispatch),
-      getTodo: () => getTodo(dispatch),
-      postTodo: (todo) => postTodo(dispatch, todo)
+      getPriorityValues: () => dispatch(getPriority()),
+      getCategoryValues: () => dispatch(getCategory()),
+      getTodo: () => dispatch(getTodo()),
+      postTodo: (todo) => dispatch(postTodo(todo)),
     }
   }
 )(MainContainer);
