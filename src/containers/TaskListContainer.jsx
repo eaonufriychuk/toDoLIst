@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { deleteTodo } from '../actions/todo';
-import { getPriority } from "../actions/priority";
-import { getCategory } from "../actions/category";
+import { getPriority } from '../actions/priority';
+import { getCategory } from '../actions/category';
 
 import TaskList from '../components/TaskList/TaskList';
 

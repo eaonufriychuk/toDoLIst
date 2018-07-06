@@ -13,7 +13,7 @@ import {
   Label
 } from 'reactstrap';
 
-export default class FilterPriority extends Component {
+export default class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {

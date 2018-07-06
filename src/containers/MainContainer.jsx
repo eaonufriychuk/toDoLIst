@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import Main from '../components/Main/Main';
 
-import { getTodo, postTodo } from "../actions/todo";
+import { getTodo, postTodo } from '../actions/todo';
 
-import { getPriority } from "../actions/priority";
-import { getCategory } from "../actions/category";
+import { getPriority } from '../actions/priority';
+import { getCategory } from '../actions/category';
 
 class MainContainer extends Component {
 
