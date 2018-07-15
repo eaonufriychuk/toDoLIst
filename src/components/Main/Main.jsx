@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
-
+import PropTypes from 'prop-types';
 import { formatDate } from '../../constants';
-
 import TaskBar from '../TaskBar/TaskBar';
 import TaskListContainer from '../../containers/TaskListContainer';
 import SideBar from '../SideBar/SideBar';
 
-export default class Main extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,16 +14,40 @@ export default class Main extends Component {
       filters: {
         priority: [],
         category: [],
-      }
+      },
     };
   }
+
+  onFilterClear = filterLabel => () => {
+    this.setState(({ filters }) => ({ filters: { ...filters, [filterLabel]: [] } }));
+  };
+
+
+  onFilterChange = (priorityValue, filterLabel) => () => {
+    this.setState(({ filters }) => ({
+      filters: {
+        ...filters,
+        [filterLabel]: filters[filterLabel].includes(priorityValue)
+          ? filters[filterLabel].filter(value => value !== priorityValue)
+          : [...filters[filterLabel], priorityValue],
+      },
+    }));
+  };
+
+  onSortDate = () => {
+    this.setState(prevState => ({ sorted: !prevState.sorted }));
+  };
+
+  upDateSearch = (event) => {
+    this.setState(({ search: event.target.value.trim() }));
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
     const { postTodo, getPriorityValues, getCategoryValues } = this.props;
 
-    if (event.target.task.value && event.target.priority.value &&
-      event.target.category.value) {
+    if (event.target.task.value && event.target.priority.value
+      && event.target.category.value) {
       const newItem = {
         text: event.target.task.value.trim(),
         priority: event.target.priority.value,
@@ -35,85 +58,37 @@ export default class Main extends Component {
       postTodo(newItem)
         .then(() => getPriorityValues())
         .then(() => getCategoryValues());
-    };
-  };
-
-  upDateSearch = (event) => {
-    this.setState(({ search: event.target.value.trim() }));
-  };
-
-  onPriorityClear = () => {
-    this.setState(({ filters }) => ({ filters: { ...filters, priority: [] } }));
-  };
-
-  onPriorityChange = (priorityValue) => () => {
-    this.setState(({ filters }) => ({
-      filters: {
-        ...filters,
-        priority: filters.priority.includes(priorityValue)
-          ? filters.priority.filter(value => value !== priorityValue)
-          : [...filters.priority, priorityValue]
-      }
-    }));
-  };
-
-  onCategoryClear = () => {
-    this.setState(({ filters }) => ({ filters: { ...filters, category: [] } }));
-  };
-
-  onCategoryChange = (categoryValue) => () => {
-    this.setState(({ filters }) => ({
-      filters: {
-        ...filters,
-        category: filters.category.includes(categoryValue)
-          ? filters.category.filter(value => value !== categoryValue)
-          : [...filters.category, categoryValue]
-      }
-    }));
-  };
-
-  onSortDate = () => {
-    this.setState({ sorted: !this.state.sorted })
+    }
   };
 
   render() {
     const {
+      filters,
+      sorted,
+      search,
+    } = this.state;
+
+    const {
       priority,
-      category
-    } = this.state.filters;
+      category,
+    } = filters;
 
     const {
       priorityValues,
-      categoryValues
+      categoryValues,
     } = this.props;
-
-    const {
-      sorted,
-      search
-    } = this.state;
 
     return (
       <Fragment>
         <TaskBar
           handleSubmit={this.handleSubmit}
-          onPriorityChange={this.onPriorityChange}
-          onPriorityClear={this.onPriorityClear}
-          onCategoryChange={this.onCategoryChange}
-          onCategoryClear={this.onCategoryClear}
-          priority={priority}
-          category={category}
-          sorted={sorted}
-          onSortDate={this.onSortDate}
-          upDateSearch={this.upDateSearch}
         />
         <div className="row row-centered">
           <div className="col-sm-3">
             <SideBar
               upDateSearch={this.upDateSearch}
-              onPriorityChange={this.onPriorityChange}
-              onPriorityClear={this.onPriorityClear}
-              onCategoryChange={this.onCategoryChange}
-              onCategoryClear={this.onCategoryClear}
+              onFilterChange={this.onFilterChange}
+              onFilterClear={this.onFilterClear}
               category={category}
               priority={priority}
               onSortDate={this.onSortDate}
@@ -124,8 +99,6 @@ export default class Main extends Component {
           </div>
           <div className="col-sm-9">
             <TaskListContainer
-              onPriorityChange={this.onPriorityChange}
-              onPriorityClear={this.onPriorityClear}
               search={search}
               priority={priority}
               category={category}
@@ -133,7 +106,17 @@ export default class Main extends Component {
             />
           </div>
         </div>
-      </Fragment >
+      </Fragment>
     );
-  };
+  }
 }
+
+Main.propTypes = {
+  postTodo: PropTypes.func.isRequired,
+  getPriorityValues: PropTypes.func.isRequired,
+  getCategoryValues: PropTypes.func.isRequired,
+  priorityValues: PropTypes.instanceOf(Array).isRequired,
+  categoryValues: PropTypes.instanceOf(Array).isRequired,
+};
+
+export default Main;

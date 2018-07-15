@@ -1,40 +1,43 @@
 import './SideBar.css';
-
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Search from '../Search/Search';
-import FilterList from '../FilterList/FilterList';
+import FilterListContainer from '../../containers/FilterListContainer';
 
-export default (props) => {
+function SideBar(props) {
   const {
+    onFilterChange,
+    onFilterClear,
     upDateSearch,
-    onPriorityChange,
-    onPriorityClear,
-    onCategoryChange,
-    onCategoryClear,
     category,
     priority,
     onSortDate,
     sorted,
-    priorityValues,
-    categoryValues,
   } = props;
 
   return (
     <div className="side-bar">
       <Search upDateSearch={upDateSearch} />
-      <FilterList
-        onPriorityChange={onPriorityChange}
+      <FilterListContainer
+        onFilterChange={onFilterChange}
+        onFilterClear={onFilterClear}
         priority={priority}
-        onPriorityClear={onPriorityClear}
-        onCategoryChange={onCategoryChange}
         category={category}
         sorted={sorted}
-        onCategoryClear={onCategoryClear}
         onSortDate={onSortDate}
-        priorityValues={priorityValues}
-        categoryValues={categoryValues}
       />
     </div>
-  )
+  );
 }
+
+SideBar.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
+  onFilterClear: PropTypes.func.isRequired,
+  upDateSearch: PropTypes.func.isRequired,
+  category: PropTypes.instanceOf(Array).isRequired,
+  priority: PropTypes.instanceOf(Array).isRequired,
+  onSortDate: PropTypes.func.isRequired,
+  sorted: PropTypes.bool.isRequired,
+};
+
+export default SideBar;

@@ -1,5 +1,0 @@
-export const ADD_TODO = 'ADD_TODO';
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const GET_TODO_REQUEST = 'GET_TODO_REQUEST';
-export const GET_TODO_COMPLETED = 'GET_TODO_COMPLETED';
-export const GET_TODO_FAILED = 'GET_TODO_FAILED';
