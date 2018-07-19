@@ -46,13 +46,11 @@ MainContainer.propTypes = {
 };
 
 export default connect(
-  (state, props) => ({
-    ...props,
+  state => ({
     priorityValues: state.priority.priorityValues,
     categoryValues: state.category.categoryValues,
   }),
-  (dispatch, props) => ({
-    ...props,
+  dispatch => ({
     getPriorityValues: () => dispatch(getPriority()),
     getCategoryValues: () => dispatch(getCategory()),
     getTasks: () => dispatch(getTodo()),

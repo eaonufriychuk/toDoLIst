@@ -49,9 +49,8 @@ export default connect(
       .filter(task => (category.length !== 0 ? category.includes(task.category) : true))
       .sort((a, b) => (sorted ? (new Date(a.date) - new Date(b.date)) : null)),
   }),
-  (dispatch, props) => (
+  dispatch => (
     {
-      ...props,
       deleteTask: id => dispatch(deleteTodo(id)),
       getPriorityValues: () => dispatch(getPriority()),
       getCategoryValues: () => dispatch(getCategory()),
